@@ -1,6 +1,8 @@
-import React from 'react'
-
+import React, {useEffect} from 'react'
 export const About = () => {
+    // useEffect(() => {
+    //     actions.fetchDataAbout(...... fetch("https://www.swapi.tech/api/planets/:id/")) :id es el valor remplazable por lo que va a hacer que se llame cada uno de los personajes, planetas, etc. (en este caso es el uid)
+    // }, []);
     return (
         <div className="card mb-3">
             <div className="row g-0">
@@ -18,3 +20,6 @@ export const About = () => {
         </div>
     )
 }
+
+
+
