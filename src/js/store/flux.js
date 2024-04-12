@@ -23,49 +23,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			
-			/* fetchCharactersData: async()=>{
-				// let store = getStore()
-				try{
-					const response = await fetch("https://www.swapi.tech/api/people");
-					console.log(response)
-					const data = await response.json()
-					if(response.ok){
-			//acá estaba el setStore			
-						const characterData = []
-						for (const eachCharacter of data.results){
-							const responseEachCharacter = await fetch(`https://www.swapi.tech/api/people/${eachCharacter.uid}`)
-							characterData = await responseEachCharacter.json()
-							if(characterData.ok){
-								characterData.push(characterData.result.properties)
-							
-							}
-							console.log(characterData)
-						}
-						setStore({characters: data.results}) //remplazar este por todos ellos info detallada y luego hacer el setStore a esa información
-						return true
-					}
-					setStore({characters: false})
-					return false
-				}catch(e){
-					console.error("An error happended fetching characters data", e)
-					setStore({characters: false})
-					return false
-				}
-			}, */
+			// fetchCharactersData: async () => {
+			// 	try {
+			// 		const response = await fetch("https://www.swapi.tech/api/people");
+			// 		const data = await response.json();
+			// 		console.log(data)
+			// 		if (response.ok) {
+			// 			const charactersData = [];
+			// 			for (const character of data.results) {
+			// 				const responseEachCharacter = await fetch(`https://www.swapi.tech/api/people/${character.uid}`); // respuesta en general
+			// 				const characterData = await responseEachCharacter.json(); //respuesta traducida a js
+			// 				if (responseEachCharacter.ok) { //si la respuesta general es ok
+			// 					charactersData.push(characterData.result.properties); // respuesta traducida hace push 
+			// 				}
+			// 			}
+			// 			setStore({ characters: charactersData }); // Seteamos todos los datos de los personajes en el store
+			// 			return true;
+			// 		}
+			// 		setStore({ characters: false });
+			// 		return false;
+			// 	} catch (e) {
+			// 		console.error("An error happened fetching characters data", e);
+			// 		setStore({ characters: false });
+			// 		return false;
+			// 	}
+			// },
 			fetchCharactersData: async () => {
 				try {
 					const response = await fetch("https://www.swapi.tech/api/people");
 					const data = await response.json();
+					console.log(data);
 					if (response.ok) {
 						const charactersData = [];
 						for (const character of data.results) {
-							const responseEachCharacter = await fetch(`https://www.swapi.tech/api/people/${character.uid}`); // respuesta en general
-							const characterData = await responseEachCharacter.json(); //respuesta traducida a js
-							if (responseEachCharacter.ok) { //si la respuesta general es ok
-								charactersData.push(characterData.result.properties); // respuesta traducida hace push 
+							const responseEachCharacter = await fetch(`https://www.swapi.tech/api/people/${character.uid}`);
+							const characterData = await responseEachCharacter.json();
+							if (responseEachCharacter.ok) {
+								charactersData.push(characterData.result); // Guardamos todo el objeto result en charactersData
 							}
 						}
-						setStore({ characters: charactersData }); // Seteamos todos los datos de los personajes en el store
+						setStore({ characters: charactersData });
 						return true;
 					}
 					setStore({ characters: false });
@@ -77,17 +74,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			fetchMoreCharactersData: async()=>{
-				try{
-					const response = await fetch(`https://www.swapi.tech/api/people/${store}`);
-			
-					const data = await response.json()
+			fetchPlanetsData: async() => {
+				try {
+					const response = await fetch("https://www.swapi.tech/api/planets");
+					const data = await response.json();
 					console.log(data)
 					if(response.ok){
-						// setStore()
+						const planetsData = [];
+						for (const planet of data.results){
+							const responseEachPlanet = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`)//llamada info de la API
+							const planetData = responseEachPlanet.json();// traduccioón de json a js
+							if(responseEachPlanet.ok){ //si la respuesta del llamado a la API es ok 
+								planetsData.push(planetData.results) //se guarda todo en el array de planetsData
+							}
+							console.log(planetsData)
+						}
+						setStore({planets: planetsData});
+						
 					}
+					setStore({planets: false})
+					return false
 				}catch(e){
-					console.error(e)
+					console.error("An error happended fetching planets data",e)
+					setStore({planets: false})
+					return false
 				}
 			},
 
@@ -100,23 +110,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore()
 
 				setStore({favorites: store.favorites.filter(item => item.name != name)}) //retorna mismo array pero con nombre distinto al que quiero borrar
-			},
-
-			fetchPlanetsData: async()=>{
-				try{
-					const response = await fetch("https://www.swapi.tech/api/planets");
-					console.log(response)
-					const data = await response.json()
-					if(response.ok){
-						setStore({planets:data.results})
-					}
-					setStore({planets: false})
-					return false
-				}catch(e){
-					console.error("An error happended fetching planets data",e)
-					setStore({planets: false})
-					return false
-				}
 			},
 
 
