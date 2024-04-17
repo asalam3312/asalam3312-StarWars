@@ -1,3 +1,75 @@
 .theCards{
     width: 300px;
+    background: #383737;
+    color: aliceblue;
 }
+/* .like{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 10px red,
+    0 0 20px blue,
+    0 0 24px blue;
+    font-size: small;
+} */
+/* .like::before{
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -20%;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+}
+.like::after{
+    content: '';
+    position: absolute;
+    right: -50%;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+} */
+.dropdown{
+    position: relative;
+    top: -30px;
+    background:rgb(39, 226, 29) ;
+    box-shadow: 0 0 10px rgb(39, 226, 29),
+    0 0 20px rgb(39, 226, 29),
+    0 0 24px rgb(39, 226, 29);
+}
+.StarWarsTittle{
+    display: block;
+    font-family: jedi-outline;
+}
+body{
+    background: #000000;
+}
+#TheNav{
+    height: 80px;
+    background-image: url("https://e1.pxfuel.com/desktop-wallpaper/549/675/desktop-wallpaper-star-wars-star-backgrounds-%C2%B7%E2%91%A0-star-background.jpg");
+    }
+.logo{
+    position: relative;
+       top: -30px
+}
+.col{
+    border-left-color: yellow;
+    border-right-color: yellow;
+}
+a{
+    text-decoration: none;
+}
+/* .dropdown-menu{
+    max-width: 300px;
+    overflow-y: auto;
+}
+.dropdown-menu li{
+    white-space: nowrap;
+}
+.dropdown-menu button{
+    margin-left: auto;
+} */

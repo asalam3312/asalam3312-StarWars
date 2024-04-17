@@ -1,13 +1,18 @@
 import React, { useEffect, useContext } from 'react';
 import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router';
 
 
 
 export const Characters = () => {
 
     const { store, actions } = useContext(Context);
+    //const id = useParams().character.id 
+    const navigate = useNavigate();
 
-
+    const handleLearnMore=(uid)=>{
+        navigate(`/About/${uid}`)
+    }
     useEffect(() => {
         actions.fetchCharactersData()
     }, [])
@@ -34,8 +39,8 @@ export const Characters = () => {
                                         <p className="card-text">Hair color: {properties.hair_color}</p>
                                         <p className="card-text">Eyes Color: {properties.eye_color}</p>
                                         <div className='d-flex justify-content-between'>
-                                            <button className="btn btn-primary" onClick={() => { handlerLearnMore }}>Learn more!</button>
-                                            <div className="warning" onClick={() => actions.addFavorite(properties.name, character.uid)}>❤</div>
+                                            <button className="btn btn-primary" onClick={() => { handleLearnMore(character.uid) }}>Learn more!</button>
+                                            <a className="like btn-sm" onClick={() => actions.addFavorite(properties.name, character.uid)}>❤</a>
                                         </div>
                                     </div>
                                 </div>
