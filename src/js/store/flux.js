@@ -83,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data)
 					if (response.ok) {
 						const vehiclesData = []
-						for (const vehicle of data.results) {
+						for (const vehicle of data.results) { //data.results es solo porque data es la constante que nos está guardando esta información y dentro de esta vemos en el navegador que contiene a results{} en donde se encuentra la información que necesitamos.
 							const eachVehicle = await fetch(`https://www.swapi.tech/api/vehicles/${vehicle.uid}`)
 							const vehicleData = await eachVehicle.json()
 							if (eachVehicle.ok) {
@@ -98,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ vehicles: false })
 				}
 			},
-			
+
 			addFavorite: (name, uid) => {
 				const store = getStore()
 
