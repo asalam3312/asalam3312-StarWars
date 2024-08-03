@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			characters: null,
 			planets: null,
+			vehicles: null,
 			favorites: [],
 		},
 		actions: {
@@ -51,43 +52,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			fetchPlanetsData: async() => {
+			fetchPlanetsData: async () => {
 				try {
 					const response = await fetch("https://www.swapi.tech/api/planets");
 					const data = await response.json();
 					console.log(data) // muestra toda la información sin problemas hasta acá, tal vez hay un problema en el llamado más adelante
-					if(response.ok){
+					if (response.ok) {
 						const planetsData = [];
-						for (const planet of data.results){
+						for (const planet of data.results) {
 							const responseEachPlanet = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`)//llamada info de la API
 							const planetData = await responseEachPlanet.json();// traduccioón de json a js
-							if(responseEachPlanet.ok){ //si la respuesta del llamado a la API es ok 
+							if (responseEachPlanet.ok) { //si la respuesta del llamado a la API es ok 
 								planetsData.push(planetData.result) //se guarda todo en el array de planetsData
 							}
 						}
 						console.log(planetsData)
-						setStore({planets: planetsData});
+						setStore({ planets: planetsData });
 					}
 					console.log(getStore().planets) //se muestra el estado de planets actualizado
-				}catch(e){
-					console.error("An error happended fetching planets data",e)
-					setStore({planets: false})
+				} catch (e) {
+					console.error("An error happended fetching planets data", e)
+					setStore({ planets: false })
 					return false
 				}
 			},
-			
-			// fetchAboutcard: async()=>{
-			// 	Navigate()
-			// },
-			addFavorite: (name, uid)=>{
-				const store = getStore()
-
-				setStore({favorites: [...store.favorites, {"name": name, "uid": uid}]})
+			fetchVehiclesData: async () => {
+				try {
+					const response = await fetch('https://www.swapi.tech/api/vehicles/');
+					const data = await response.json()
+					console.log(data)
+					if (response.ok) {
+						const vehiclesData = []
+						for (const vehicle of data.results) {
+							const eachVehicle = await fetch(`https://www.swapi.tech/api/vehicles/${vehicle.uid}`)
+							const vehicleData = await eachVehicle.json()
+							if (eachVehicle.ok) {
+								vehiclesData.push(vehicleData.result)
+							}
+						}
+						console.log(vehiclesData)
+						setStore({ vehicles: vehiclesData })
+					}
+				} catch (e) {
+					console.error(e)
+					setStore({ vehicles: false })
+				}
 			},
-			deleteFavorite: (name)=>{
+			
+			addFavorite: (name, uid) => {
 				const store = getStore()
 
-				setStore({favorites: store.favorites.filter(item => item.name != name)}) //retorna mismo array pero con nombre distinto al que quiero borrar
+				setStore({ favorites: [...store.favorites, { "name": name, "uid": uid }] })
+			},
+			deleteFavorite: (name) => {
+				const store = getStore()
+
+				setStore({ favorites: store.favorites.filter(item => item.name != name) }) //retorna mismo array pero con nombre distinto al que quiero borrar
 			},
 
 
